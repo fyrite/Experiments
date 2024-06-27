@@ -30,7 +30,7 @@ namespace Experiments
         {
             maxValueHits = 0;
             var hasIncrementedDigit = false;
-            
+
             for (var i = 0; i < digits; i++)
             {
                 if (hasIncrementedDigit) // Only evaluate if we've reach maxValue for each digit.
@@ -38,18 +38,18 @@ namespace Experiments
                     maxValueHits += Current[i] == maxValue ? 1 : 0;
                     continue;
                 }
-                
+
                 if (Current[i] == maxValue)
                 {
                     // Reset the digit as it equals maxValue.
                     Current[i] = 0;
                     continue;
                 }
-                
+
                 // Increment the digit as we have not reached maxValue.
                 Current[i]++;
                 maxValueHits += Current[i] == maxValue ? 1 : 0;
-                    
+
                 hasIncrementedDigit = true;
             }
         }
@@ -66,14 +66,14 @@ namespace Experiments
             {
                 throw new ArgumentOutOfRangeException(nameof(state), $"An array of length {digits} is required.");
             }
-            
+
             if (state.Any(x => x > maxValue))
             {
                 throw new ArgumentException($"Permutation must contain values less than {maxValue}.");
             }
 
             maxValueHits = 0;
-            
+
             for (var i = 0; i < digits; i++)
             {
                 Current[i] = state[i];
@@ -92,6 +92,7 @@ namespace Experiments
             {
                 return permutation.ToString() == ToString();
             }
+
             return false;
         }
     }

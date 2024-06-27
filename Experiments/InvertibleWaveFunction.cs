@@ -21,15 +21,15 @@ namespace Experiments
         public static void GenerateExcelFile(int fromX, int toX, double increment)
         {
             var data = new StringBuilder();
-            
+
             for (double x = fromX; x <= toX; x += increment)
             {
                 data.AppendLine($"{x};{WaveFn(x)};{WaveFnInverse(x)}");
             }
-            
+
             File.WriteAllText("waveFn.csv", data.ToString());
         }
-        
+
         public static double WaveFn(double x)
         {
             var origX = x;
@@ -101,6 +101,7 @@ namespace Experiments
             {
                 return CalcEventShift(Math.Truncate(x)) * 2 - 2;
             }
+
             return CalcOddShift(Math.Truncate(x)) * 2 - 2;
         }
 

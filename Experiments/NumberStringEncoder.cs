@@ -32,17 +32,17 @@ namespace Experiments
         private const int HeaderLength = 1;
 
         private static readonly Regex OnlyDigitsRegex = new("^[0-9]+$");
-        
+
         private static readonly Dictionary<string, string> HexCharMap = new()
         {
             {"A", "10"},
             {"B", "11"},
-            {"C", "12"}, 
+            {"C", "12"},
             {"D", "13"},
             {"E", "14"},
             {"F", "15"}
         };
-        
+
         /// <summary>
         /// Encodes the number string.
         /// </summary>
@@ -53,26 +53,26 @@ namespace Experiments
             var foo = OnlyDigitsRegex.IsMatch(numbers);
             if (!OnlyDigitsRegex.IsMatch(numbers))
                 throw new ArgumentException("Only digits are allowed in the input string.");
-            
+
             // Convert to sudo-hex to make iteration over the number string simpler.
             var sudoHex = ToSudoHex(numbers);
- 
+
             // The algorithm ensures that the length of the encoded numbers is at most half the original size.
             var halfSudoHexLen = sudoHex.Length * 0.5;
-            
+
             // If sudoHex length is odd then ensure we cater for the 4 least significant bits.
-            var bytesLen = (int) Math.Ceiling(halfSudoHexLen); 
+            var bytesLen = (int) Math.Ceiling(halfSudoHexLen);
 
             // True if sudoHex length is even i.e. all 4-bit sections are relevant the byte[].
             // False if sudoHex length is odd i.e. the 4 least significant bits are not relevant in the byte[].
             var header = (byte) (sudoHex.Length % 2 == 0 ? 1 : 0);
-            
+
             var bytes = new byte[HeaderLength + bytesLen];
             bytes[0] = header;
 
             // Used to packs each 4-bit number in a byte. It is incremented only once a byte is complete.
             var packIndex = 1;
-            
+
             for (var i = 0; i < sudoHex.Length; i++)
             {
                 // Convert to string as we don't want to store the int value of the char, but rather the number value itself.  
@@ -83,7 +83,7 @@ namespace Experiments
                 {
                     value = fromSudoHex;
                 }
-                
+
                 // Get the value as a byte. 
                 var byt = Convert.ToByte(value);
 
@@ -103,7 +103,7 @@ namespace Experiments
                     // => byt = 00000011
                     // => bytes[bitPackIdx] = 10010011. 
                     bytes[packIndex] = (byte) (bytes[packIndex] | byt);
-                    
+
                     // Only increment the packIndex once we have processed two chars in the string. 
                     packIndex++;
                 }
@@ -111,7 +111,7 @@ namespace Experiments
 
             return bytes;
         }
-        
+
         /// <summary>
         /// Decodes the number string.
         /// </summary>
@@ -120,17 +120,17 @@ namespace Experiments
         public static string Decode(IReadOnlyList<byte> encoded)
         {
             var decoded = new StringBuilder();
-            
+
             var isLeastSignificantBitsValid = encoded[0] == 1;
             var withoutHeaderLen = encoded.Count - HeaderLength;
 
             for (var i = HeaderLength; i < withoutHeaderLen + HeaderLength; i++)
             {
                 var parts = encoded[i];
-                
+
                 // Get the most significant bits with a right bit shift.
                 var part1 = parts >> 4;
-                
+
                 // Get the least significant bits with the bitwise & operator.
                 // 0x0F = 00001111 acts as a mask when used with the bitwise & operator.
                 // This yields the 4 least significant bits of the byte.
@@ -162,8 +162,9 @@ namespace Experiments
         {
             foreach (var (ch, val) in HexCharMap)
             {
-                numbers = numbers.Replace(val, ch);   
+                numbers = numbers.Replace(val, ch);
             }
+
             return numbers;
         }
     }

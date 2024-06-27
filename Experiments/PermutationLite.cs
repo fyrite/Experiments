@@ -18,7 +18,7 @@
                     Current[i] = 0;
                     continue;
                 }
-                
+
                 Current[i]++;
                 return;
             }

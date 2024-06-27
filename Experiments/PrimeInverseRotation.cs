@@ -11,9 +11,9 @@ namespace Experiments
     {
         // this value enables rotation of the cycle by one decimal at a time
         private const int PowerLimit = 10;
-        
+
         private static readonly Dictionary<string, double[]> Cache = new();
-        
+
         /// <summary>
         /// Rotates the inverse of the divisor by the specified angle for the specified cycle.
         /// </summary>
@@ -30,7 +30,7 @@ namespace Experiments
         {
             if (cycle <= 0)
                 throw new ArgumentException("The cycle must be greater than 0.");
-            
+
             if (divisor == 0)
                 throw new ArgumentException("The divisor must be greater than 0.");
 
@@ -72,9 +72,10 @@ namespace Experiments
                 if (!cycles.Add(dividend))
                     break;
             }
+
             return cycles.ToArray();
         }
-        
+
         /// <summary>
         /// Calculates the digital root of a number.
         /// </summary>

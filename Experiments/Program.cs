@@ -7,9 +7,9 @@ namespace Experiments
         public static void Main()
         {
             // Permutation();
-            
+
             // PrimeRotation(31);
-            
+
             // WaveFunction();
         }
 
@@ -20,9 +20,9 @@ namespace Experiments
             {
                 Console.WriteLine(permutation.ToString());
 
-                if (permutation.HasCompletedCycle) 
+                if (permutation.HasCompletedCycle)
                     break;
-                
+
                 permutation.MoveNext();
             }
         }
@@ -35,7 +35,7 @@ namespace Experiments
                 {
                     var rotated = PrimeInverseRotation.Rotate(prime, angle, cycle);
                     Console.WriteLine($"{cycle} : {angle} : {rotated}");
-                }   
+                }
             }
         }
 
@@ -43,10 +43,10 @@ namespace Experiments
         {
             var fn = InvertibleWaveFunction.WaveFn(0.5);
             Console.WriteLine(fn);
-            
+
             fn = InvertibleWaveFunction.WaveFnInverse(fn);
             Console.WriteLine(fn);
-            
+
             InvertibleWaveFunction.GenerateExcelFile(-2, 2, 0.01);
         }
     }
