@@ -9,6 +9,8 @@ namespace Experiments
             // Permutation();
             
             // PrimeRotation(31);
+            
+            // WaveFunction();
         }
 
         private static void Permutation()
@@ -35,6 +37,17 @@ namespace Experiments
                     Console.WriteLine($"{cycle} : {angle} : {rotated}");
                 }   
             }
+        }
+
+        private static void WaveFunction()
+        {
+            var fn = InvertibleWaveFunction.WaveFn(0.5);
+            Console.WriteLine(fn);
+            
+            fn = InvertibleWaveFunction.WaveFnInverse(fn);
+            Console.WriteLine(fn);
+            
+            InvertibleWaveFunction.GenerateExcelFile(-2, 2, 0.01);
         }
     }
 }
